@@ -12,6 +12,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
 using System.ComponentModel.Design;
+using LIB.API.Domain;
 
 
 public class UpdateRecieptCommandHandler : IRequestHandler<UpdateRecieptCommand, Unit>
@@ -46,7 +47,12 @@ public class UpdateRecieptCommandHandler : IRequestHandler<UpdateRecieptCommand,
 
         var re = await _RecieptRepository.GetById(request.RecieptDto.Id);
 
+        if (!(re.ApprovedBy == "BackDate"))
+        {
+            re.Transaction_Date = DateTime.UtcNow;
 
+
+        }
 
         var add = _mapper.Map(request.RecieptDto, re);
 

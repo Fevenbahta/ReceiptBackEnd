@@ -20,7 +20,7 @@ namespace LIB.API.Domain
         public string ACCOUNTNUMBER { get; set; }
 
         public string BRANCH { get; set; }
-        public string TELEPHONENUMBER { get; set; }
+        public string? TELEPHONENUMBER { get; set; }
 
 
     }

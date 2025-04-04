@@ -76,9 +76,14 @@ namespace LIB.API.Application.CQRS.Reciept.Handler.Command
 
 
             var reciept = _mapper.Map<Reciepts>(request.RecieptDto);
- 
-            reciept.Transaction_Date = DateTime.UtcNow;
+            reciept.Refno = "Manual";
+            if(!(reciept.ApprovedBy== "BackDate"))
+            {
+                reciept.Transaction_Date = DateTime.UtcNow;
 
+
+            }
+           
             var createdReciept = await _RecieptRepository.Add(reciept);
 
             return createdReciept;  // Return the created receipt

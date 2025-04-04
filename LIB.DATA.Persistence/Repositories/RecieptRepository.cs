@@ -39,7 +39,7 @@ namespace LIB.API.Persistence.Repositories
         public async Task<List<RecieptDto>> GetRecieptsByDateIntervalAsync(DateTime startDate, DateTime endDate)
         {
             return await _context.IfrsTransactions
-                .Where(t => t.Transaction_Date >= startDate && t.Transaction_Date <= endDate)
+                .Where(t =>( t.Transaction_Date >= startDate && t.Transaction_Date <= endDate)&& t.Refno!="Manual")
                 .Select(t => new RecieptDto
                 {
                     //Id = t.Id,  // Assuming `Id` is the same
@@ -156,7 +156,7 @@ namespace LIB.API.Persistence.Repositories
         public async Task<List<RecieptDto>> GetRecieptManualAsync(DateTime startDate, DateTime endDate)
         {
             var transactions = await _context.IfrsTransactions
-                .Where(t => t.PaymentType == "Manual" && t.Transaction_Date.Date >= startDate.Date && t.Transaction_Date.Date <= endDate.Date)
+                .Where(t => (t.Refno == "Manual") && t.Transaction_Date.Date >= startDate.Date && t.Transaction_Date.Date <= endDate.Date)
                 .ToListAsync();
 
             if (transactions == null || transactions.Count == 0)
@@ -245,7 +245,7 @@ namespace LIB.API.Persistence.Repositories
 
             var query2 = @"
 SELECT *
-FROM anbesaprod.valid_accounts
+FROM anbesaprod.valid_accounts2
 WHERE ACCOUNTNUMBER = :accountNumber";
 
             var accountNumberParameter = new OracleParameter("accountNumber", accountNumber);

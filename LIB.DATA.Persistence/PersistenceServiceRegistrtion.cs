@@ -57,7 +57,7 @@ namespace LIB.API.Persistence
             services.AddScoped<IDbConnection>(_ => new OracleConnection(connectionString));
             // services.AddScoped<IDbConnection>(_ => new NpgsqlConnection(connectionSqlString));
 
-            services.AddHostedService<TcpServerService>();
+    
 
             return services;
         }
